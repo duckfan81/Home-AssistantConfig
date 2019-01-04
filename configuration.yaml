@@ -2,19 +2,19 @@ homeassistant:
   # Name of the location where Home Assistant is running
   name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: 39.8802
-  longitude: -104.7920
+  latitude: !secret latitude
+  longitude: !secret longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
   elevation: 5190
   # metric for Metric, imperial for Imperial
   unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: MST
+  time_zone: !secret time_zone
   # Customization file
   customize: !include customize.yaml
 
 # Show links to resources in log and frontend
-introduction:
+#introduction:
 
 # Enables the frontend
 frontend:
@@ -58,16 +58,15 @@ tts:
   - platform: google
   
 #App integrations  
-ios:
+#ios:
 
 # Cloud
 cloud:
 
 # MQTT
 mqtt:
- broker: localhost
- discovery: true
- discovery_prefix: smartthings
+  broker: a0d7b954-mqtt
+  client_id: homeassistant
 
 # Unifi Device tracker
 device_tracker:
@@ -75,7 +74,8 @@ device_tracker:
     host: unifi.cadcom.us
     username: brendan
     password: !secret normal_pw
-    ssl: false
+    verify_ssl: false
+    site_id: !secret unifi_B_site_id
 
 tuya:
   username: brendan.galloway@gmail.com
@@ -100,23 +100,41 @@ lock:
     command_topic: "smartthings/Front Door/lock/cmd"
     payload_lock: "locked"
     payload_unlock: "unlocked"
-    optimistic: false
+#    optimistic: false
     qos: 1
     retain: true
 
 #Media Players
 media_player:
   - platform: firetv
-    name: Bedroom Fire TV
+    name: Bedroom_Fire_TV
     host: 10.222.73.34
-
+    adbkey: "/config/adbkeys/masterbedroom_firetv_adbkey"
+  - platform: plex
 
 panel_iframe:
   configurator:
     title: Configurator
     icon: mdi:wrench
     url: http://hassio.local:3218
+  ide:
+    title: IDE
+    icon: mdi:code-braces
+    url: https://10.222.73.140:8321
+  nodered:
+    title: Node-RED
+    icon: mdi:sitemap
+    url: http://10.222.73.140:1880
+  terminal:
+    title: Terminal
+    icon: mdi:console
+    url: https://10.222.73.140:7681
+  mqtt:
+    title: MQTT
+    icon: mdi:code-brackets
+    url: https://10.222.73.140:5713
 
 group: !include groups.yaml
-automation: !include automations.yaml
+automation: !include_dir_merge_list automations/
+#automation: !include automations.yaml
 script: !include scripts.yaml

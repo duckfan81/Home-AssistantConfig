@@ -1,0 +1,72 @@
+#Views
+default_view:
+  name: Home
+  view: yes
+  entities:
+    - group.people
+    - sensor.MasterBedroomTemp
+    - sensor.MasterBedroomHumidity
+    - media_player.Bedroom_Fire_TV
+#    - group.all_lights
+
+upstairs:
+  name: Upstairs
+  view: yes
+  entities:
+    - light.magical_wonderland
+    - light.batcave
+    - light.stairs
+    - media_player.Bedroom_Fire_TV
+    
+downstairs:
+  name: Downstairs
+  view: yes
+  entities:
+    - switch.4250258084f3eb60de2b
+    - switch.42502580b4e62d4ed343
+    - switch.42502580b4e62d4ed6c0
+    - lock.front_door
+    - sensor.front_door_lock_battery
+    - light.stairs
+
+exterior:
+  name: Exterior
+  view: yes
+  entities:
+    - group.outside_lights
+  
+garage:
+  name: Garage
+  view: yes
+  
+system:
+  name: System
+  view: yes
+  entities:
+    - group.synology
+
+#Groups
+
+people:
+  name: People
+  view: false
+  entities:
+    - device_tracker.brendansiphone6
+    - device_tracker.caitlinsiphone
+    - device_tracker.samsungsmt377v
+    - device_tracker.samsungsmg925v
+    - device_tracker.galaxys8
+    
+outside_lights:
+  name: Outside Lights
+  view: false
+  entities:
+    - light.Front_Porch
+    - light.Back_Porch
+
+synology:
+  name: Synology
+  view: false
+  entities:
+    - sensor.status_volume_1
+    - sensor.volume_used_volume_1
